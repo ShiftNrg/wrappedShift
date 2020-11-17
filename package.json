@@ -1,0 +1,53 @@
+{
+  "name": "wrapped-shift-crowdfund",
+  "version": "1.0.0",
+  "description": "wSHIFT crowdfund contracts",
+  "main": "networks.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "compile": "npx truffle compile",
+    "coverage": "npx truffle run coverage",
+    "deploy-testnet": "npx truffle deploy",
+    "develop": "npx truffle dev",
+    "migrate": "npx truffle migrate",
+    "test": "npx truffle test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shiftnrg/wrapped-shift-crowdfund.git"
+  },
+  "keywords": [
+    "smart",
+    "contracts",
+    "ethereum",
+    "wrapped",
+    "shift",
+    "shiftnrg",
+    "blockchain"
+  ],
+  "author": "Matt Swezey <swezey@shiftnrg.org>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shiftnrg/wrapped-shift-crowdfund/issues"
+  },
+  "homepage": "https://github.com/shiftnrg/wrapped-shift-crowdfund#readme",
+  "dependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@openzeppelin/cli": "^2.8.2",
+    "@openzeppelin/contracts": "^3.2.0",
+    "@openzeppelin/test-helpers": "^0.5.9",
+    "@truffle/hdwallet-provider": "^1.1.0",
+    "bn.js": "^4.11.0",
+    "chai": "^4.0.0",
+    "chai-bn": "^0.2.1",
+    "ethers": "^5.0.17",
+    "ganache-cli": "^6.12.0",
+    "openzeppelin-solidity": "^3.2.0",
+    "solc": "^0.6.12",
+    "solidity-coverage": "^0.7.12",
+    "truffle": "^5.1.48",
+    "web3": "^1.3.0"
+  }
+}
