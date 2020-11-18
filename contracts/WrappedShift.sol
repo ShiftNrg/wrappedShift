@@ -50,6 +50,17 @@ contract WrappedShift is AccessControl, ERC20Capped, ERC20Pausable, ERC20Burnabl
     }
 
     /**
+     * @dev allows batch minting to support multible addresses & amounts
+     */
+    function multiMint(address[] calldata recipients, uint256[] calldata amounts) external {
+        require(recipients.length == amounts.length, "array lengths are not equal");
+        
+        for (uint256 i = 0; i < recipients.length; i++) {
+            _mint(recipients[i], amounts[i]);
+        }
+    }
+
+    /**
      * @dev Pauses all token transfers.
      * - the caller must have the `PAUSER_ROLE`.
      */

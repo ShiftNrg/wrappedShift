@@ -1,5 +1,6 @@
-# ERC-20 Token: Name: `Wrapped Shift` Symbol: `wSHIFT`
-## Blockchain Network: `Ethereum mainnet`
+# Name: `Wrapped Shift` Symbol: `wSHIFT`
+### ERC-20 Token 
+### Blockchain Network: `Ethereum mainnet`
 
 ## Purpose
 1. Provide greater outreach to future users of ShiftNrg's Phoenix platform via Uniswap's dex and others alike
@@ -14,11 +15,20 @@ Symbol: wSHIFT
 **Supply Multiplyer: 10x
 ```
 
-### Notice:
-* *Lisk-based Shift has decimals of 8 places.
-* **Migration to `Substrate Shift` or `Wrapped Shift` will include a 10x supply increase 
+## Token Features
+* ***Capped via `CAPPED_ROLE`
+* Burnable via `BURNER_ROLE`
+* Mintable via `MINTER_ROLE`
+  * customized `multiMint(address[], amounts[])` function created to support minting in batches
+* Pauseable via `PAUSER_ROLE`
 
-####  Example:
+
+### Notes:
+* *: Lisk-based Shift has decimals of 8 places.
+* **: Migration to `Substrate Shift` or `Wrapped Shift` will include a 10x supply increase 
+* ***: Cap is adjustable based on a dedicated role `CAPPED_ROLE`
+
+####  Example: Simple 10x Increase Scenarios
 
 ```
 // Previous (original) balances
@@ -26,7 +36,7 @@ Alice: 50 SHIFT
 BOB: 100 SHIFT
 ```
 
-1. Alice migrates her tokens to wSHIFT
+1. Alice migrates her tokens to Wrapped Shift
 2. Bob migrates his tokens to Substrate-based Shift
    
 
@@ -42,8 +52,9 @@ old SHIFT -> wrapped SHIFT: 10x
 Wrapped SHIFT -> substrate SHIFT: 1x
 ```
 
-As you can see, each migration included a 10x change in balance.
-The final result, at the time of this writing, will be the following:
+As you can see, the first two migrations included a 10x change in balance.
+The third one did not, as the 10x increase already occured when going from (old) SHIFT -> wSHIFT.
+The final result, at the time of this writing, will be the following: 
 
 `~14MM SHIFT -> ~140MM SHIFT` - Total Estimated Supply
 
@@ -81,8 +92,8 @@ yarn coverage
 ------------------------|----------|----------|----------|----------|----------------|
 File                    |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
 ------------------------|----------|----------|----------|----------|----------------|
- contracts/             |      100 |      100 |      100 |      100 |                |
-  WrappedShift.sol      |      100 |      100 |      100 |      100 |                |
+ contracts/             |     87.5 |    88.89 |    90.91 |       88 |                |
+  WrappedShift.sol      |     87.5 |    88.89 |    90.91 |       88 |       56,58,59 |
  contracts/oz-modified/ |      100 |      100 |      100 |      100 |                |
   ERC20Capped.sol       |      100 |      100 |      100 |      100 |                |
 ------------------------|----------|----------|----------|----------|----------------|
