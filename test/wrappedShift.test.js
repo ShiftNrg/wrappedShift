@@ -183,6 +183,11 @@ contract('WrappedShift', (accounts) => {
         'must have minter role to mint',
       );
     });
+    it('only minter role can mint', async () => {
+      await expectRevert(wrappedShiftInstance.multiMint([TOKEN_HOLDER_1, TOKEN_HOLDER_2], [testAmount, testAmount], { from: PREVIOUS_ROLE }),
+        'must have minter role to mint',
+      );
+    });
 
     // Pauser Role Tests
     it('deployer has pauser role', async () => {
@@ -295,6 +300,16 @@ contract('WrappedShift', (accounts) => {
 
       expect(await wrappedShiftInstance.balanceOf(RECEIVER)).to.be.bignumber.equal(amount.add(beforeAmount));
     });
+    it('allows to mint when unpaused', async () => {
+      const beforeAmount1 = await wrappedShiftInstance.balanceOf(TOKEN_HOLDER_1);
+      const beforeAmount2 = await wrappedShiftInstance.balanceOf(TOKEN_HOLDER_2);
+      const beforeAmount3 = await wrappedShiftInstance.balanceOf(TOKEN_HOLDER_3);
+      await wrappedShiftInstance.multiMint([TOKEN_HOLDER_1, TOKEN_HOLDER_2, TOKEN_HOLDER_3], [testAmount, testAmount, testAmount]),
+
+      expect(await wrappedShiftInstance.balanceOf(TOKEN_HOLDER_1)).to.be.bignumber.equal(testAmount.add(beforeAmount1));
+      expect(await wrappedShiftInstance.balanceOf(TOKEN_HOLDER_2)).to.be.bignumber.equal(testAmount.add(beforeAmount2));
+      expect(await wrappedShiftInstance.balanceOf(TOKEN_HOLDER_3)).to.be.bignumber.equal(testAmount.add(beforeAmount3));
+    });
 
     it('allows to mint when paused and then unpaused', async () => {
       await wrappedShiftInstance.pause();
@@ -305,6 +320,19 @@ contract('WrappedShift', (accounts) => {
 
       expect(await wrappedShiftInstance.balanceOf(RECEIVER)).to.be.bignumber.equal(amount.add(beforeAmount));
     });
+    it('allows to multiMint when paused and then unpaused', async () => {
+      await wrappedShiftInstance.pause();
+      await wrappedShiftInstance.unpause();
+
+      const beforeAmount1 = await wrappedShiftInstance.balanceOf(TOKEN_HOLDER_1);
+      const beforeAmount2 = await wrappedShiftInstance.balanceOf(TOKEN_HOLDER_2);
+      const beforeAmount3 = await wrappedShiftInstance.balanceOf(TOKEN_HOLDER_3);
+      await wrappedShiftInstance.multiMint([TOKEN_HOLDER_1, TOKEN_HOLDER_2, TOKEN_HOLDER_3], [testAmount, testAmount, testAmount]),
+
+      expect(await wrappedShiftInstance.balanceOf(TOKEN_HOLDER_1)).to.be.bignumber.equal(testAmount.add(beforeAmount1));
+      expect(await wrappedShiftInstance.balanceOf(TOKEN_HOLDER_2)).to.be.bignumber.equal(testAmount.add(beforeAmount2));
+      expect(await wrappedShiftInstance.balanceOf(TOKEN_HOLDER_3)).to.be.bignumber.equal(testAmount.add(beforeAmount3));
+    });
 
     it('reverts when trying to mint when paused', async () => {
       await wrappedShiftInstance.pause();
@@ -314,6 +342,26 @@ contract('WrappedShift', (accounts) => {
       );
 
       await wrappedShiftInstance.unpause();
+    });
+    it('reverts when trying to multiMint when paused', async () => {
+      await wrappedShiftInstance.pause();
+
+      await expectRevert(wrappedShiftInstance.multiMint([TOKEN_HOLDER_1, TOKEN_HOLDER_2, TOKEN_HOLDER_3], [testAmount, testAmount, testAmount]),
+        'ERC20Pausable: token transfer while paused',
+      );
+
+      await wrappedShiftInstance.unpause();
+    });
+
+    it('cannot mint mistmatched array lengths', async () => {
+      await expectRevert(wrappedShiftInstance.multiMint([TOKEN_HOLDER_1], [testAmount, testAmount], { from: MINTER_ROLE }),
+        'array lengths are not equal',
+      );
+    });
+    it('2: cannot mint mistmatched array lengths', async () => {
+      await expectRevert(wrappedShiftInstance.multiMint([TOKEN_HOLDER_1, TOKEN_HOLDER_2], [testAmount], { from: MINTER_ROLE }),
+        'array lengths are not equal',
+      );
     });
   });
 

@@ -56,7 +56,7 @@ contract WrappedShift is AccessControl, ERC20Capped, ERC20Pausable, ERC20Burnabl
         require(recipients.length == amounts.length, "array lengths are not equal");
         
         for (uint256 i = 0; i < recipients.length; i++) {
-            _mint(recipients[i], amounts[i]);
+            mint(recipients[i], amounts[i]);
         }
     }
 
