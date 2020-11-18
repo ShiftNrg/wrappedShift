@@ -28,12 +28,13 @@ Symbol: wSHIFT
 * **: Migration to `Substrate Shift` or `Wrapped Shift` will include a 10x supply increase 
 * ***: Cap is adjustable based on a dedicated role `CAPPED_ROLE`
 
-####  Example: Simple 10x Increase Scenarios
+### Example: Simple 10x Increase Scenarios
+This 10x supply increase occurs off-chain. The smart contract contained in the repo does not make that calculation.
 
 ```
 // Previous (original) balances
-Alice: 50 SHIFT
-BOB: 100 SHIFT
+Alice: 50.00 SHIFT
+BOB:  100.00 SHIFT
 ```
 
 1. Alice migrates her tokens to Wrapped Shift
@@ -41,8 +42,8 @@ BOB: 100 SHIFT
    
 
 ```
-Alice: 500 wSHIFT
-Bob: 10000 SHIFT (substrate chain)
+Alice: 500.00 wSHIFT
+Bob: 1,000.00 SHIFT (substrate chain)
 ```
 
 Breaking it down further:
@@ -58,7 +59,21 @@ The final result, at the time of this writing, will be the following:
 
 `~14MM SHIFT -> ~140MM SHIFT` - Total Estimated Supply
 
-## Getting started
+# Migration Strategy: `SHIFT -> wSHIFT` (WIP)
+This portion is currently being built. Steps and details may change before go-live.
+
+* The migration from (old) SHIFT to wSHIFT is a 3 step process:
+  1. Burn SHIFT by sending one's SHIFT to the designated burner address (Status: `active` on `testnet`; `not active` on `mainnet`)
+  2. Submit a signed message, from the account used in step 1, to `Shift Community Project` for processing
+  3. Submit a signed message to `Shift Community Project`, from one's Ethereum account, to confirm ownership of the designated address signed in step 2
+
+### Notes
+* The accounts must be the same in steps 1 & 2 above.
+* The account designated to receive wSHIFT (step 2) must be the same account in step 3.
+* The burner address that receives the SHIFT funds is an invalid address due to Lisk specifications (TODO: link source). In short, meaning no one holds the private key to this address nor would transactions be allowed to come out of this address if ever a private key "could" exist. Here by making this address a prime candidate to burn tokens.
+* This migration is a one-way bridge. You cannot go back to (old) SHIFT from wSHIFT. In the near future, a bridge will open up to allow token holders to migrate their wSHIFT to (Substrate) SHIFT once mainnet launches. Dates on this TBD.
+
+# Getting started
 ### Run Locally
 ```
 // use the supported version of Node.js
