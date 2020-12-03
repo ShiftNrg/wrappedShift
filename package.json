@@ -1,7 +1,7 @@
 {
-  "name": "wrapped-shift-crowdfund",
+  "name": "wrappedShift",
   "version": "1.0.0",
-  "description": "wSHIFT crowdfund contracts",
+  "description": "wSHIFT smart contract",
   "main": "networks.js",
   "directories": {
     "test": "test"
@@ -11,12 +11,14 @@
     "coverage": "npx truffle run coverage",
     "deploy-testnet": "npx truffle deploy",
     "develop": "npx truffle dev",
+    "flatten": "npx truffle-flattener ./contracts/WrappedShift.sol >> ./build/flattened/WrappedShift.sol",
+    "gen-docs": "npx solidity-docgen -i ./build/flattened/",
     "migrate": "npx truffle migrate",
     "test": "npx truffle test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shiftnrg/wrapped-shift-crowdfund.git"
+    "url": "git+https://github.com/ShiftNrg/wrappedShift.git"
   },
   "keywords": [
     "smart",
@@ -30,9 +32,9 @@
   "author": "Matt Swezey <swezey@shiftnrg.org>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/shiftnrg/wrapped-shift-crowdfund/issues"
+    "url": "https://github.com/ShiftNrg/wrappedShift/issues"
   },
-  "homepage": "https://github.com/shiftnrg/wrapped-shift-crowdfund#readme",
+  "homepage": "https://github.com/ShiftNrg/wrappedShift#readme",
   "dependencies": {
     "@babel/core": "^7.0.0-0",
     "@openzeppelin/cli": "^2.8.2",
@@ -47,7 +49,12 @@
     "openzeppelin-solidity": "^3.2.0",
     "solc": "^0.6.12",
     "solidity-coverage": "^0.7.12",
+    "solidity-docgen": "^0.5.9",
     "truffle": "^5.1.48",
+    "truffle-flattener": "^1.5.0",
     "web3": "^1.3.0"
+  },
+  "devDependencies": {
+    "hardhat": "^2.0.4"
   }
 }

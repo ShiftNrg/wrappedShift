@@ -363,6 +363,23 @@ contract('WrappedShift', (accounts) => {
         'array lengths are not equal',
       );
     });
+
+    it('cannot mint over cap', async () => {
+      await expectRevert(wrappedShiftInstance.mint(TOKEN_HOLDER_1, initialTokenCap.add(testAmount), { from: MINTER_ROLE }),
+        'ERC20Capped: cap exceeded',
+      );
+    });
+    it('can mint more than previous cap after new cap is set', async () => {
+
+      const currentSupply = await wrappedShiftInstance.totalSupply();
+
+      await wrappedShiftInstance.setCap(initialTokenCap.add(testAmount).add(testAmount), { from: DEFAULT_ADMIN_ROLE });
+
+      await wrappedShiftInstance.mint(TOKEN_HOLDER_1, initialTokenCap.sub(currentSupply).add(testAmount).add(testAmount), { from: MINTER_ROLE });
+
+      // increase cap after test for remaining test
+      await wrappedShiftInstance.setCap(initialTokenCap.add(testAmount).add(testAmount).add(testAmount).add(testAmount).add(testAmount), { from: DEFAULT_ADMIN_ROLE });
+    });
   });
 
   /** Pauseable Tests */

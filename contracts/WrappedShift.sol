@@ -33,6 +33,7 @@ contract WrappedShift is AccessControl, ERC20Capped, ERC20Pausable, ERC20Burnabl
     /**
      * @dev Updates the cap on the token's total supply.
      * - the caller must have the `CAPPED_ROLE`.
+     * - the new cap must be greater than the previous
      */
     function setCap(uint256 _newCap) public {
         require(hasRole(CAPPED_ROLE, _msgSender()), "must have capped role to set cap");
@@ -51,6 +52,7 @@ contract WrappedShift is AccessControl, ERC20Capped, ERC20Pausable, ERC20Burnabl
 
     /**
      * @dev allows batch minting to support multible addresses & amounts
+     * protected by the mint() method require statement
      */
     function multiMint(address[] calldata recipients, uint256[] calldata amounts) external {
         require(recipients.length == amounts.length, "array lengths are not equal");
@@ -97,8 +99,7 @@ contract WrappedShift is AccessControl, ERC20Capped, ERC20Pausable, ERC20Burnabl
     }
 
     /**
-     * @dev Destroys `amount` tokens from `account`, reducing the
-     * total supply.
+     * @dev Destroys `amount` tokens from `account`, reducing the total supply.
      * Overidden from ERC20 contract
      * Changes:
      *     added modifier: canBurn
@@ -107,6 +108,9 @@ contract WrappedShift is AccessControl, ERC20Capped, ERC20Pausable, ERC20Burnabl
         super._burn(account, amount);
     }
 
+    /**
+     * @dev override _beforeTokenTransfer method in the hierachical chain: ERC20, ERC20Capped, ERC20Pausable
+     */
     function _beforeTokenTransfer(address from, address to, uint256 amount) internal override(ERC20, ERC20Capped, ERC20Pausable) {
         super._beforeTokenTransfer(from, to, amount);
     }
