@@ -76,7 +76,8 @@ This portion is currently being built. Steps and details may change before go-li
 * This migration is a one-way bridge. You cannot go back to (old) SHIFT from wSHIFT. In the near future, a bridge will open up to allow token holders to migrate their wSHIFT to (Substrate) SHIFT once mainnet launches. Dates on this TBD.
 
 
-Here's a high level workflow illustration. Note: step 3 from above is missing and will be added 
+Here's a high level workflow illustration. Note: step 3 from above is missing and will be added.
+* This repository represents the blue swim-lane below labeled `wSHIFT`
 ![img](migration-workflow.png)
 
 # Getting started
