@@ -15,7 +15,7 @@ contract WrappedShift is AccessControl, ERC20Capped, ERC20Pausable, ERC20Burnabl
     bool public burningEnabled = false;
 
     /**
-     * @dev Throws if called by any account other than the owner.
+     * @dev Throws if burning is disabled set by the BURNER_ROLE.
      */
     modifier canBurn() {
         require(burningEnabled == true, "cannot burn tokens; burning disabled");

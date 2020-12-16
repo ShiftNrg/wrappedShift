@@ -138,4 +138,12 @@ All files               |      100 |      100 |      100 |      100 |           
 4. https://ethereum.stackexchange.com/
 
 # Audit Report
-* `PENDING`
+* Audit conducted by [Monte Labs](https://montelabs.com)
+  * [Audit Report](./wShift_audit.pdf)
+
+Highlight:
+```
+This document is a security audit report for for the Wrapped Shift (wSHIFT) smart contracts, where we discuss design, architecture and potential issues found while analyzing and testing the code.
+
+The contracts use a few OpenZeppelin libraries, which are considered standard and have been heavily audited and used by the community in general. The code is easy to read, well documented and tested exhaustively as 100% of the contract is covered by unit tests. We did not find any issues and our concerns are purely architectural. Those are detailed in Section 5. Section 6 presents our concluding thoughts on the audit.
+```
