@@ -14,7 +14,9 @@
     "flatten": "npx truffle-flattener ./contracts/WrappedShift.sol >> ./build/flattened/WrappedShift.sol",
     "gen-docs": "npx solidity-docgen -i ./build/flattened/",
     "migrate": "npx truffle migrate",
-    "test": "npx truffle test"
+    "test": "npx truffle test",
+    "verify-main": "npx truffle run verify WrappedShift --network mainnet",
+    "verify-ropsten": "npx truffle run verify WrappedShift --network ropsten"
   },
   "repository": {
     "type": "git",
@@ -39,7 +41,7 @@
     "@babel/core": "^7.0.0-0",
     "@openzeppelin/cli": "^2.8.2",
     "@openzeppelin/contracts": "^3.2.0",
-    "@openzeppelin/test-helpers": "^0.5.9",
+    "@openzeppelin/test-helpers": "^0.5.10",
     "@truffle/hdwallet-provider": "^1.1.0",
     "bn.js": "^4.11.0",
     "chai": "^4.0.0",
@@ -47,11 +49,14 @@
     "ethers": "^5.0.17",
     "ganache-cli": "^6.12.0",
     "openzeppelin-solidity": "^3.2.0",
+    "regenerator-runtime": "^0.13.7",
     "solc": "^0.6.12",
     "solidity-coverage": "^0.7.12",
     "solidity-docgen": "^0.5.9",
     "truffle": "^5.1.48",
     "truffle-flattener": "^1.5.0",
+    "truffle-ledger-provider": "^1.0.3",
+    "truffle-plugin-verify": "^0.5.4",
     "web3": "^1.3.0"
   },
   "devDependencies": {

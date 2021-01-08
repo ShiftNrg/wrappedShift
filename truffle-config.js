@@ -18,12 +18,22 @@
  *
  */
 
+const regeneratorRuntime = require("regenerator-runtime");
+
 const HDWalletProvider = require('@truffle/hdwallet-provider');
-const infuraKey = "";
-//
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
-const local_mnemonic = "";
+const LedgerWalletProvider = require('truffle-ledger-provider');
+const secrets = require('./.secrets.json');
+
+const infura_project_id = secrets.infura_project_id;
+const mnemonic_key = secrets.mnemonic_key;
+
+const ledgerOptions = {
+  networkId: 1, // mainnet
+  path: "44'/60'/0'/0", // ledger default derivation path
+  askConfirm: false,
+  accountsLength: 1,
+  accountsOffset: 0
+};
 
 module.exports = {
   /**
@@ -36,6 +46,10 @@ module.exports = {
    * $ truffle test --network <network-name>
    */
 
+  api_keys: {
+    etherscan: secrets.etherscan_key
+  },
+
   networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
@@ -47,6 +61,41 @@ module.exports = {
      host: "127.0.0.1",     // Localhost (default: none)
      port: 8545,            // Standard Ethereum port (default: none)
      network_id: "*",       // Any network (default: none)
+    },
+    goerli: {
+      provider: function() {
+        return new HDWalletProvider(mnemonic_key, `https://kovan.infura.io/v3/${infura_project_id}`);
+      },
+      network_id: '5',
+      skipDryRun: false,
+    },
+    kovan: {
+      provider: function() {
+        return new HDWalletProvider(mnemonic_key, `https://kovan.infura.io/v3/${infura_project_id}`);
+      },
+      network_id: '42',
+      skipDryRun: false,
+    },
+    mainnet: {
+      provider: function() {
+        return new LedgerWalletProvider(ledgerOptions, `https://mainnet.infura.io/v3/${infura_project_id}`);
+      },
+      network_id: '1',
+      skipDryRun: true,
+      production: true,
+    },
+    rinkeby: {
+      provider: function() {
+        return new HDWalletProvider(mnemonic_key, `https://rinkeby.infura.io/v3/${infura_project_id}`);
+      },
+      network_id: '4',
+    },
+    ropsten: {
+      provider: function() {
+        return new HDWalletProvider(mnemonic_key, `https://ropsten.infura.io/v3/${infura_project_id}`);
+      },
+      network_id: '3',
+      skipDryRun: false,
     },
     // Another network with more advanced options...
     // advanced: {
@@ -80,7 +129,7 @@ module.exports = {
     // timeout: 100000
   },
 
-  plugins: ["solidity-coverage"],
+  plugins: ["solidity-coverage", "truffle-plugin-verify"],
 
   // Configure your compilers
   compilers: {
